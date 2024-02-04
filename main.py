@@ -231,7 +231,7 @@ def insert_flow_from_extended_history(data: dict, sp: spotipy.Spotify):
     # If not spotify_track_uri I will skip
     # This could mean it's a podcast or something else!
     if not data.get("spotify_track_uri"):
-        logger.warning(f"Failed to get spotify_track_uri from data {data}")
+        logger.warning(f"Failed to get spotify_track_uri from data as {data.get('ts')}")
         return
 
     track_id = data.get("spotify_track_uri").replace("spotify:track:", "")
