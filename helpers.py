@@ -47,3 +47,9 @@ def get_date_based_on_precision(precision: str, date: str) -> str:
     elif precision == "month":
         return f"{date}-01"
     return date
+
+
+def batch_generator(lst, n):
+    """Yield successive n sized chunks from lst."""
+    for i in range(0, len(lst), n):
+        yield lst[i : i + n]
