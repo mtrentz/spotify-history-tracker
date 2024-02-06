@@ -31,7 +31,7 @@ def load_extended_history(dir: str):
 
 
 def add_extended_history(sp: spotipy.Spotify):
-    extended_history = load_extended_history("extended_history")[:50]
+    extended_history = load_extended_history("extended_history")
     logger.info(
         f"Loaded {len(extended_history)} items from extended history, adding to database. This may take a while."
     )
