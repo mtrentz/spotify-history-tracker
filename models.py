@@ -230,3 +230,18 @@ def is_streaming_history_added(played_at: str, track_id: str) -> bool:
     """
     result = query_db(query, (played_at, track_id), fetchall=True)
     return bool(result)
+
+
+def get_new_ids(table: str, ids: list) -> list:
+    """
+    From a list of IDs, return the ones that are not in the database
+    """
+    query = f"""
+        SELECT t.id
+        FROM unnest(%s::text[]) AS t(id)
+        LEFT JOIN {table} ON {table}.id = t.id
+        WHERE {table}.id IS NULL
+    """
+    result = query_db(query, (ids,), fetchall=True)
+    results = [r[0] for r in result]
+    return results

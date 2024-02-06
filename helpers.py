@@ -1,5 +1,5 @@
 from typing import List, Dict, Optional, Tuple
-from db import query_db, conn
+from db import query_db
 
 
 def get_image_sizes(
