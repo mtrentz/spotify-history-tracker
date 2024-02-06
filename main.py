@@ -72,7 +72,7 @@ def add_extended_history(sp: spotipy.Spotify):
             continue
 
         try:
-            logger.info(
+            logger.debug(
                 f"Inserting streaming history for track {track_id} at {data.get('ts')}"
             )
             insert_streaming_history(
@@ -121,7 +121,7 @@ def add_recently_played(sp: spotipy.Spotify):
             continue
 
         try:
-            logger.info(
+            logger.debug(
                 f"Inserting streaming history for track {track_id} at {track.get('played_at')}"
             )
             insert_streaming_history(
@@ -153,6 +153,11 @@ def main():
     )
 
     parser.add_argument(
+        "--debug",
+        action="store_true",
+        help="Enable debug mode for logging",
+    )
+    parser.add_argument(
         "--recently-played",
         action="store_true",
         help="Fetch recently played tracks",
@@ -173,6 +178,10 @@ def main():
     if not any(vars(args).values()):
         parser.print_help()
         exit(1)
+
+    # Set the log level
+    if args.debug:
+        logger.setLevel("DEBUG")
 
     if args.extended_history or args.recently_played:
         # Log that it started

@@ -46,7 +46,7 @@ def insert_track_list(tracks: list, album_id: str, sp: spotipy.Spotify):
     # insert the tracks!
     for track in tracks:
         try:
-            logger.info(f"Inserting track {track.get('id')} into the database")
+            logger.debug(f"Inserting track {track.get('id')} into the database")
             insert_track(
                 track.get("id"),
                 track.get("name"),
@@ -68,7 +68,7 @@ def insert_track_list(tracks: list, album_id: str, sp: spotipy.Spotify):
 
         for track_artist_id in track_artist_ids:
             try:
-                logger.info(
+                logger.debug(
                     f"Inserting track_artist {track.get('id')}, {track_artist_id} into the database"
                 )
                 insert_track_artist(track.get("id"), track_artist_id)
@@ -100,7 +100,7 @@ def search_and_insert_artists(
         # Get image sizes
         image_sm, image_md, image_lg = get_image_sizes(artist.get("images", []))
         try:
-            logger.info(f"Inserting artist {artist.get('id')} into the database")
+            logger.debug(f"Inserting artist {artist.get('id')} into the database")
             insert_artist(
                 artist.get("id"),
                 artist.get("name"),
@@ -123,13 +123,13 @@ def search_and_insert_artists(
             artist_genre_id = get_genre_id(genre)
             if not artist_genre_id:
                 try:
-                    logger.info(f"Inserting genre {genre} into the database")
+                    logger.debug(f"Inserting genre {genre} into the database")
                     artist_genre_id = insert_genre(genre)
                 except Exception as e:
                     logger.error(f"Failed to insert genre {genre}: {e}")
                     continue
             try:
-                logger.info(
+                logger.debug(
                     f"Inserting artist_genre {artist.get('id')}, {artist_genre_id} into the database"
                 )
                 insert_artist_genre(artist.get("id"), artist_genre_id)
@@ -178,7 +178,7 @@ def flow_insert_all_from_albums(
             # Get image sizes
             image_sm, image_md, image_lg = get_image_sizes(album.get("images", []))
             try:
-                logger.info(f"Inserting album {album.get('id')} into the database")
+                logger.debug(f"Inserting album {album.get('id')} into the database")
                 insert_album(
                     album.get("id"),
                     album.get("name"),
@@ -206,13 +206,13 @@ def flow_insert_all_from_albums(
                 album_genre_id = get_genre_id(genre)
                 if not album_genre_id:
                     try:
-                        logger.info(f"Inserting genre {genre} into the database")
+                        logger.debug(f"Inserting genre {genre} into the database")
                         album_genre_id = insert_genre(genre)
                     except Exception as e:
                         logger.error(f"Failed to insert genre {genre}: {e}")
                         continue
                 try:
-                    logger.info(
+                    logger.debug(
                         f"Inserting album_genre {album.get('id')}, {album_genre_id} into the database"
                     )
                     insert_album_genre(album.get("id"), album_genre_id)
