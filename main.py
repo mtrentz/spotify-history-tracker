@@ -48,7 +48,7 @@ def add_extended_history(sp: spotipy.Spotify):
                 track_id = item.get("spotify_track_uri").replace("spotify:track:", "")
                 ids.append(track_id)
             except Exception:
-                logger.error("Failed to get track id, likely a podcast.")
+                logger.warning("Failed to get track id, likely a podcast.")
                 continue
 
         outer_batch.extend(get_new_ids("tracks", ids))
