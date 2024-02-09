@@ -42,6 +42,10 @@ def get_date_based_on_precision(precision: str, date: str) -> str:
     1994-01 -> 1994-01-01
     1994 -> 1994-01-01
     """
+    # If year is 0000 set it to 0001
+    # (this is common occurance and then it fails to insert into SQL)
+    if date == "0000":
+        date = "0001"
     if precision == "year":
         return f"{date}-01-01"
     elif precision == "month":
