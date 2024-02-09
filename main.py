@@ -87,8 +87,8 @@ def add_extended_history(sp: spotipy.Spotify):
                 data.get("shuffle"),
             )
         except Exception as e:
-            logger.error(
-                f"Failed to insert streaming history for track {track_id}: {e}"
+            logger.warning(
+                f"Failed to insert streaming history for track {track_id}. WILL TRY AGAIN: {e}"
             )
             # I will try again by actually inserting the track
             try:
