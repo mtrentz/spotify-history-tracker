@@ -90,6 +90,24 @@ def add_extended_history(sp: spotipy.Spotify):
             logger.error(
                 f"Failed to insert streaming history for track {track_id}: {e}"
             )
+            # I will try again by actually inserting the track
+            try:
+                flow_insert_all_from_tracks([track_id], sp)
+                insert_streaming_history(
+                    data.get("ts"),
+                    data.get("ms_played"),
+                    track_id,
+                    # Context is always None when coming from extended history
+                    None,
+                    data.get("reason_start"),
+                    data.get("reason_end"),
+                    data.get("skipped"),
+                    data.get("shuffle"),
+                )
+            except Exception as e:
+                logger.error(
+                    f"Failed to insert streaming history for track {track_id} even after trying to insert it: {e}"
+                )
 
 
 def add_recently_played(sp: spotipy.Spotify):
