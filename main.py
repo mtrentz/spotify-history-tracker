@@ -3,7 +3,7 @@ import json
 import spotipy
 import argparse
 from spotipy.oauth2 import SpotifyOAuth
-from db import close_connection
+from db import close_connection, query_db
 from logger import logger
 from models import (
     insert_streaming_history,
@@ -109,6 +109,15 @@ def add_extended_history(sp: spotipy.Spotify):
                     f"Failed to insert streaming history for track {track_id} even after trying to insert it: {e}"
                 )
 
+    # Merge possible "duplicates" between the extended history and the recently played
+    # Comments for this are in the fix_history_merge.sql file
+    try:
+        with open("fix_history_merge.sql") as f:
+            query = f.read()
+            query_db(query, commit=True)
+    except Exception as e:
+        logger.error(f"Failed to merge history: {e}")
+
 
 def add_recently_played(sp: spotipy.Spotify):
     """
@@ -160,6 +169,7 @@ def add_recently_played(sp: spotipy.Spotify):
 
 
 def main():
+
     try:
         startup_database()
     except Exception as e:
