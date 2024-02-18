@@ -205,6 +205,11 @@ def flow_insert_all_from_albums(
             album_artist_ids = [artist.get("id") for artist in album_artist_ids]
 
             for album_artist_id in album_artist_ids:
+
+                # Check if artist_id is on the database
+                if not get_object_by_id(album_artist_id, "artists"):
+                    search_and_insert_artists([album_artist_id], sp)
+
                 try:
                     logger.debug(
                         f"Inserting album_artist {album.get('id')}, {album_artist_id} into the database"
