@@ -12,6 +12,7 @@ from models import (
     get_object_by_id,
     insert_track,
     insert_track_artist,
+    insert_album_artist,
 )
 
 
@@ -198,6 +199,22 @@ def flow_insert_all_from_albums(
                     f"Failed to insert album {album.get('id')} into the database: {e}"
                 )
                 continue
+
+            # Album artists
+            album_artist_ids = album.get("artists", [])
+            album_artist_ids = [artist.get("id") for artist in album_artist_ids]
+
+            for album_artist_id in album_artist_ids:
+                try:
+                    logger.debug(
+                        f"Inserting album_artist {album.get('id')}, {album_artist_id} into the database"
+                    )
+                    insert_album_artist(album.get("id"), album_artist_id)
+                except Exception as e:
+                    logger.error(
+                        f"Failed to insert album_artist {album.get('id')}, {album_artist_id}: {e}"
+                    )
+                    continue
 
             # Genres
             album_genres = album.get("genres", [])
