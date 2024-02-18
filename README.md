@@ -29,7 +29,7 @@ python3 main.py --recently-played
 - Run the script.
 
 ```
-python3 main.-y --extended-history
+python3 main.py --extended-history
 ```
 
 **IMPORTANT**: Requesting a large streaming history can take a lot of time and get your API key blocked for a while. If you're requesting data for a large period of time it might be necessary to run the script over multiple days.
