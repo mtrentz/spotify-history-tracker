@@ -1,6 +1,6 @@
 # Spotify History Tracker
 
-Automate the process of capturing your Spotify streaming history ionto a PostgreSQL database. This script has two primary features:
+Automate the process of capturing your Spotify streaming history into a PostgreSQL database. This script has two primary features:
 
 - **Fetches recently played songs and adds it into the database**. Perfect for running on a cronjob.
 - **Process all your "extended streaming history"** JSON file, querying all tracks, artists and albums and adding them into the database.
